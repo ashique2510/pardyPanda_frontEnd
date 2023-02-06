@@ -21,6 +21,8 @@ export default function Album() {
   const [user, setUser] = React.useState('');
   const navigate = useNavigate();
 
+
+
   React.useEffect(() => {
     const loginUser = JSON.parse(localStorage.getItem('user'));
     if (!loginUser) {
@@ -29,7 +31,8 @@ export default function Album() {
     setUser(loginUser);
   }, []);
 
-  console.log('daata', data);
+
+
   React.useEffect(() => {
     const fetchData = async () => {
       try {
@@ -70,7 +73,7 @@ export default function Album() {
               style={{
                 backgroundColor: 'yellow',
                 position: 'static',
-                marginLeft:'60px',
+                marginLeft: '60px',
                 textAlign: 'center',
               }}
               size="big"
@@ -83,18 +86,21 @@ export default function Album() {
 
       <main>
         {/* Hero unit */}
-        <Box
-          sx={{
-            bgcolor: 'background.paper',
-            pt: 8,
-            pb: 6,
-          }}
-        ></Box>
+        <Box sx={{ bgcolor: 'background.paper', pt: 8, pb: 6 }}></Box>
         <Container maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={4}>
-            {data.map((item) => (
-              <Grid item key={item.id} xs={12} sm={6} md={4}>
+            {data.map((item, index) => (
+              <Grid
+                item
+                key={item.id}
+                xs={12}
+                sm={6}
+                md={4}
+                style={{
+                  gridColumn: index % 2 === 0 ? 'auto/span 2' : 'span 2/auto',
+                }}
+              >
                 <Card
                   sx={{
                     height: '100%',
@@ -102,16 +108,11 @@ export default function Album() {
                     flexDirection: 'column',
                   }}
                 >
-                  {/* {console.log(item.url)} */}
-
                   <CardMedia
                     component="img"
-                    sx={{
-                      // 16:9
-                      pt: '56.25%',
-                    }}
-                    image={item.url}
+                    image={item.download_url}
                     alt="image"
+                    style={{ gridRowStart: index % 2 === 0 ? 'even' : 'odd' }}
                   />
                 </Card>
               </Grid>
